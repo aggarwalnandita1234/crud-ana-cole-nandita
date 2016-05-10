@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Group_Project</title>
+  </head>
+  <body>
+  	{{all_users}}
+  	{%for users in all_users:%}
+  		<p>ID: {{users['idusers']}}</p>
+  		<p>Name: {{users['name']}}</p>
+  		<p>Occupation: {{users['occupation']}}</p>
+  		<form action='/show/{{users['idusers']}}'>
+  			<input type='submit' name='Show' value='show'>
+  		</form>
+  		<form action='/edit/{{users['idusers']}}'>
+  			<input type='submit' name='Edit' value='Edit'>
+  		</form>
+	{% with messages = get_flashed_messages() %}
+		{% if messages %}
+			{% for message in messages %}
+				<p>{{message}}</p>
+				<form action='/delete_yes', method="post">
+					<input type='hidden' value='{{users['idusers']}}' name='id'>
+					<input type='submit' value='Yes'>
+				</form>
+
+				<form action='/delete_no'>
+					<input type='submit' value='No'>
+					
+				</form>
+			{% endfor %}
+		{% endif %}
+	{% endwith %}
+  		<form action='/delete'>
+  			<input type='submit' name='Delete' value='Delete'>
+  		</form>
+
+  	{%endfor%}
+  	<hr>
+  	<a href="/create"><button>Create</button></a>
+
+
+
+  </body>
+  </html>
